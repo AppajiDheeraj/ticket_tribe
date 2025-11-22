@@ -1,0 +1,12 @@
+[
+  { "id": 1, "name": "John Doe", "score": 124, "color": "#f5d67b" },
+  { "id": 2, "name": "Rahul Sharma", "score": 108, "color": "#d2d3d5" },
+  { "id": 3, "name": "Maya K", "score": 97, "color": "#c8996c" },
+  { "id": 4, "name": "Asha Patel", "score": 85, "color": "#9ca3af" },
+  { "id": 5, "name": "Noah Lee", "score": 72, "color": "#9ca3af" },
+  { "id": 6, "name": "Nina Roy", "score": 64, "color": "#6b7280" },
+  { "id": 7, "name": "Zed", "score": 59, "color": "#9ca3af" },
+  { "id": 8, "name": "Charlie", "score": 58, "color": "#6b7280" },
+  { "id": 9, "name": "Arjun", "score": 57, "color": "#9ca3af" },
+  { "id": 10, "name": "Leo", "score": 55, "color": "#6b7280" }
+]

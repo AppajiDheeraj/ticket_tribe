@@ -1,0 +1,240 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { MultiStepModal, MultiStepModalContent } from "@/components/ui/multi-step-modal";
+import { ResponsiveDialog } from "@/components/responsive-dialog";
+import { useIsMobile } from "@/hooks/use-mobile";
+import confettiLib from "canvas-confetti";
+
+/* CONFETTI ABOVE EVERYTHING */
+function runConfetti() {
+  const canvas = document.createElement("canvas");
+  canvas.style.position = "fixed";
+  canvas.style.top = "0";
+  canvas.style.left = "0";
+  canvas.style.width = "100vw";
+  canvas.style.height = "100vh";
+  canvas.style.pointerEvents = "none";
+  canvas.style.zIndex = "200000";
+
+  document.body.appendChild(canvas);
+
+  const c = confettiLib.create(canvas, { resize: true });
+
+  c({
+    particleCount: 105,          // ↓ fewer particles
+    spread: 800,                 // ↓ smaller burst
+    startVelocity: 35,          // ↓ lower speed
+    scalar: 1,                // 🔥 key change → half-size confetti
+    origin: { y: 0.6 },
+  });
+
+  setTimeout(() => canvas.remove(), 1200);
+}
+
+export default function OnboardingModal() {
+  const isMobile = useIsMobile();
+
+  const [referrer, setReferrer] = useState<string[]>([]);
+  const [code, setCode] = useState("");
+  const [createdCode, setCreatedCode] = useState<string | null>(null);
+  const [joining, setJoining] = useState(false);
+  const [joined, setJoined] = useState(false);
+
+  const [shareOpen, setShareOpen] = useState(false); // MOBILE ONLY
+
+  const handleCreateTribe = () => {
+    const newCode = Math.floor(100000 + Math.random() * 900000).toString();
+    setCreatedCode(newCode);
+
+    if (isMobile) {
+      setShareOpen(true);
+    }
+  };
+
+  const handleJoinTribe = () => {
+    if (code.length !== 6) return;
+
+    setJoining(true);
+
+    setTimeout(() => {
+      setJoining(false);
+      setJoined(true);
+      runConfetti();
+      setTimeout(() => (window.location.href = "/dashboard"), 900);
+    }, 1500);
+  };
+
+  const handleFinish = () => {
+    runConfetti();
+    setTimeout(() => (window.location.href = "/dashboard"), 900);
+  };
+
+  const steps = [
+    {
+      title: "Welcome to TickerTribe",
+      progress: "Step 1 of 3",
+      description: "Let's get your account ready!",
+      content: (
+        <p className="text-sm text-muted-foreground">
+          This will take less than 30 seconds.
+        </p>
+      ),
+    },
+
+    {
+      title: "Where did you hear about us?",
+      progress: "Step 2 of 3",
+      description: "Choose one or more options.",
+      content: (
+        <div className="flex flex-col gap-3">
+          {["Twitter", "Instagram", "Google Search", "Friend", "College", "Other"].map(
+            (item) => (
+              <label key={item} className="text-sm flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={referrer.includes(item)}
+                  onChange={() =>
+                    setReferrer((prev) =>
+                      prev.includes(item)
+                        ? prev.filter((x) => x !== item)
+                        : [...prev, item]
+                    )
+                  }
+                />
+                <span>{item}</span>
+              </label>
+            )
+          )}
+        </div>
+      ),
+    },
+
+    {
+      title: createdCode ? "Your Tribe is Ready" : "Join or Create Tribe",
+      progress: "Step 3 of 3",
+      description: createdCode
+        ? "Share this code with friends!"
+        : "Join with a 6-digit code or create your own tribe.",
+      content: (
+        <div className="flex flex-col gap-4">
+          {/* JOIN TRIBE */}
+          {!createdCode && (
+            <>
+              <input
+                className="border rounded-md p-2 text-sm"
+                maxLength={6}
+                placeholder="Enter 6-digit code"
+                value={code}
+                onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
+              />
+
+              <Button
+                className="w-full"
+                disabled={joining || code.length !== 6}
+                onClick={handleJoinTribe}
+              >
+                {joining ? (
+                  <div className="flex items-center gap-2">
+                    <span className="h-4 w-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+                    Joining...
+                  </div>
+                ) : joined ? (
+                  "Joined!"
+                ) : (
+                  "Join Tribe"
+                )}
+              </Button>
+
+              <div className="text-center text-sm text-muted-foreground">OR</div>
+
+              <Button className="w-full" onClick={handleCreateTribe}>
+                Create New Tribe
+              </Button>
+            </>
+          )}
+
+          {/* CREATED NEW TRIBE */}
+          {createdCode && (
+            <>
+              <div className="bg-muted rounded-lg p-4 text-center">
+                <p className="text-sm text-muted-foreground">Your Tribe Code</p>
+                <p className="text-3xl font-bold">{createdCode}</p>
+
+                {/* DESKTOP ONLY — show sharing inline */}
+                {!isMobile && (
+                  <div className="grid grid-cols-3 gap-3 mt-5">
+                    <Button variant="outline">WhatsApp</Button>
+                    <Button variant="outline">Twitter</Button>
+                    <Button variant="outline">Instagram</Button>
+                  </div>
+                )}
+              </div>
+
+              {/* MOBILE ONLY — open drawer */}
+              {isMobile && (
+                <Button
+                  className="w-full"
+                  variant="outline"
+                  onClick={() => setShareOpen(true)}
+                >
+                  Share
+                </Button>
+              )}
+
+              <Button className="w-full mt-4" onClick={handleFinish}>
+                Continue
+              </Button>
+            </>
+          )}
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <MultiStepModal defaultOpen>
+        <MultiStepModalContent steps={steps} />
+      </MultiStepModal>
+
+      {/* MOBILE SHARE DRAWER */}
+      {isMobile && (
+        <ResponsiveDialog
+          title="Share Your Tribe"
+          description="Invite your friends!"
+          open={shareOpen}
+          onOpenChange={setShareOpen}
+        >
+          <div className="space-y-4">
+            <p>Your Tribe Code</p>
+
+            <div className="flex items-center gap-2">
+              <input
+                value={createdCode || ""}
+                readOnly
+                className="border rounded-md p-2 text-sm w-full"
+              />
+
+              <Button
+                variant="outline"
+                onClick={() =>
+                  navigator.clipboard.writeText(createdCode || "")
+                }
+              >
+                Copy
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3">
+              <Button variant="outline">WhatsApp</Button>
+              <Button variant="outline">Twitter</Button>
+              <Button variant="outline">Instagram</Button>
+            </div>
+          </div>
+        </ResponsiveDialog>
+      )}
+    </>
+  );
+}
