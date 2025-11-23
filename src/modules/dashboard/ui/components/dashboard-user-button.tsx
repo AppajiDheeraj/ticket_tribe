@@ -97,14 +97,6 @@ export const DashboardUserButton = () => {
           </DrawerHeader>
 
           <div className="px-4">
-            <Button
-              variant="outline"
-              className="w-full flex items-center justify-between"
-              onClick={() => console.log("Billing clicked")}
-            >
-              Billing
-              <CreditCardIcon className="size-4 text-black" />
-            </Button>
 
             <Button
               className="w-full mt-3 flex items-center justify-between"
@@ -148,14 +140,6 @@ export const DashboardUserButton = () => {
         </div>
 
         <DropdownMenuSeparator />
-
-        <DropdownMenuItem
-          className="cursor-pointer flex items-center justify-between"
-          onClick={() => console.log("Billing clicked")}
-        >
-          Billing
-          <CreditCardIcon className="size-4" />
-        </DropdownMenuItem>
 
         <DropdownMenuItem
           className="cursor-pointer flex items-center justify-between"
