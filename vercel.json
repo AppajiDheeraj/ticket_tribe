@@ -1,14 +1,12 @@
 {
     "crons": [
         {
-        "path": "/api/lock",
-        "schedule": "30 13 * * *",
-        "headers": { "x-cron-secret": "@CRON_SECRET" }
+            "path": "/api/lock",
+            "schedule": "30 13 * * *"
         },
         {
-        "path": "/api/score",
-        "schedule": "0 21 * * *",
-        "headers": { "x-cron-secret": "@CRON_SECRET" }
+            "path": "/api/score", 
+            "schedule": "0 21 * * *"
         }
     ]
 }
