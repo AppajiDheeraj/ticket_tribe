@@ -188,7 +188,7 @@ export default function OnboardingModal() {
       progress: "Step 3 of 3",
       description: createdCode
         ? "Share this code with friends!"
-        : "Join with a 6-digit code or create your own tribe.",
+        : "Join with a 6-character code or create your own tribe.",
       content: (
         <div className="flex flex-col gap-4">
           {/* JOIN TRIBE */}
@@ -197,9 +197,9 @@ export default function OnboardingModal() {
               <input
                 className="border rounded-md p-2 text-sm"
                 maxLength={6}
-                placeholder="Enter 6-digit code"
+                placeholder="Enter 6-character code"
                 value={code}
-                onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
+                onChange={(e) => setCode(e.target.value.replace(/[^a-fA-F0-9]/g, "").toLowerCase())}
               />
 
               <Button
