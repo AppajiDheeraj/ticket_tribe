@@ -54,7 +54,7 @@ async function fetchStockPrice(symbol: string): Promise<number | null> {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // Fetch all stock prices in parallel
     const stockPromises = STOCKS.map(async (symbol) => {

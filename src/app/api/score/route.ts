@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { prediction, user } from "@/db/schema";
 import { eq, and, sql } from "drizzle-orm";
 
-export async function POST(request: Request) {
+export async function POST(_request: Request) {
     // if (request.headers.get("x-cron-secret") !== process.env.CRON_SECRET) {
     //     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
     // }
