@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
-import { ArrowUp, ArrowDown, Clock, RefreshCw, Save } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { ArrowUp, ArrowDown, RefreshCw, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { authClient } from "@/lib/auth-client";
@@ -49,6 +49,7 @@ export default function PredictView() {
     };
 
     fetchInitialData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUserPredictions = async () => {
@@ -199,7 +200,7 @@ export default function PredictView() {
       });
 
       if (response.ok) {
-        const data = await response.json();
+        await response.json();
         setHasChanges(false);
         
         const predictedStocks = [];

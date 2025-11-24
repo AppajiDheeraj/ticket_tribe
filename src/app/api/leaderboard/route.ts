@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { user } from "@/db/schema";
 import { desc } from "drizzle-orm";
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
     const users = await db
         .select({
             id: user.id,

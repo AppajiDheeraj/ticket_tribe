@@ -1,6 +1,4 @@
-import { headers } from "next/headers";
-import { HomeView } from "@/modules/home/ui/views/home-view"
-import { redirect } from "next/navigation";
+import { HomeView } from "@/modules/home/ui/views/home-view";
 
 const Page = async () => {
   return <HomeView />
