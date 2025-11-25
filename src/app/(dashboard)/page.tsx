@@ -1,9 +1,6 @@
-import dynamic from 'next/dynamic';
+"use client";
 
-const HomeView = dynamic(() => import("@/modules/home/ui/views/home-view").then(mod => ({ default: mod.HomeView })), {
-  ssr: false,
-  loading: () => <div className="flex items-center justify-center min-h-screen">Loading...</div>
-});
+import { HomeView } from "@/modules/home/ui/views/home-view";
 
 export default function Page() {
   return <HomeView />;
