@@ -9,12 +9,8 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
 
-  // ❗ FIXED: moved out of `experimental`
+  // For Neon (server-side only, not bundled)
   serverExternalPackages: ['@neondatabase/serverless'],
-
-  outputFileTracingIncludes: {
-    '/api/**/*': ['./node_modules/**/*'],
-  },
 
   async redirects() {
     return [
