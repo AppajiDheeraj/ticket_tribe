@@ -15,6 +15,7 @@
 
 
 </div>
+
 ---
 
 ## Overview
@@ -198,3 +199,4 @@ https://ticket-tribe-flax.vercel.app/api/auth/callback/google
 <div align="center">
 TicketTribe – A structured, competitive approach to tracking market intuition.
 </div>
+
