@@ -1,19 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   eslint: {
     ignoreDuringBuilds: true,
   },
+
   typescript: {
     ignoreBuildErrors: true,
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@neondatabase/serverless'],
-  },
+
+  // ❗ FIXED: moved out of `experimental`
+  serverExternalPackages: ['@neondatabase/serverless'],
+
   outputFileTracingIncludes: {
     '/api/**/*': ['./node_modules/**/*'],
   },
+
   async redirects() {
     return [
       {
@@ -22,7 +24,7 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
     ];
-  }
+  },
 };
 
 export default nextConfig;
