@@ -191,12 +191,16 @@ export const SignUpView = () => {
                         </form>
                     </Form>
 
-                    <div className="bg-radial from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
-                        <img src={"/logo.svg"} alt="Meet.AI Logo" className="w-[92px] h-[92px]" />
-                        <p className="text-2xl font-semibold text-white">
-                            Meet.AI
-                        </p>
+                    <div className="relative hidden md:flex flex-col gap-y-4 items-center justify-center 
+    overflow-hidden bg-[#2a1400]">
+
+                        <div className="absolute -top-20 -left-20 w-[300px] h-[300px] bg-orange-500/80 blur-[160px] rounded-full"></div>
+                        <div className="absolute bottom-0 right-0 w-[280px] h-[280px] bg-orange-700/80 blur-[150px] rounded-full"></div>
+
+                        <img src="/logo.svg" className="w-[92px] h-[92px] relative z-10" />
+                        <p className="text-2xl font-semibold text-white relative z-10">TicketTribe</p>
                     </div>
+
                 </CardContent>
             </Card>
             <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-sm text-balance *:[a]:underline *:[a]:underline-offset-4">
